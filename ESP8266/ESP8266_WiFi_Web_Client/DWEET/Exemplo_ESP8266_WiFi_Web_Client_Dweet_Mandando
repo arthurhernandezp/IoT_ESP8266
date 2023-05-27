@@ -1,0 +1,52 @@
+#include <ESP8266WiFi.h>
+#include <WiFiClient.h> 
+
+const char* ssid = "ssssssssssssssssssss";      // WiFi SSID
+const char* password = "pppppppppppppppp";     // WiFi password
+const char* host = "www.dweet.io";
+
+int contaFalhas=0;
+
+
+WiFiClient client;
+
+void setup(){
+  Serial.begin(115200);
+  Serial.println();
+  
+  Serial.printf("Connecting to %s ", ssid);
+  WiFi.begin(ssid, password);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);    
+  }  
+}
+
+void(* resetFunc) (void) = 0;
+
+void loop(){
+
+
+    if (client.connect(host, 80)) { 
+        contaFalhas=0;    
+        String caminho = "GET /dweet/for/B4HUERJIoT?temperatura=36";
+
+     //String s = "GET /get/latest/dweet/for/B4HUERJIoT";
+        client.println(caminho); 
+        client.println();
+        Serial.println("[Response:]");
+        while (client.connected()){
+          if (client.available())      {
+            String line = client.readStringUntil('\n');
+            Serial.println(line);
+          }
+       } 
+      client.stop();
+      Serial.println("\n[Disconnected]");    
+  }
+  else {     
+    client.stop();
+    contaFalhas++;
+    if (contaFalhas>5) resetFunc();
+  }
+  delay(30000);
+}
