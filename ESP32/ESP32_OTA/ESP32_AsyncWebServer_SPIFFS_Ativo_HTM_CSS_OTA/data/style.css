@@ -1,0 +1,28 @@
+html {
+  font-family: Helvetica;
+  display: inline-block;
+  margin: 0px auto;
+  text-align: center;
+}
+h2{
+  color: #13383d;
+  padding: 2vh;
+}
+p{
+  font-size: 1.1rem;
+}
+.button {
+  display: inline-block;
+  background-color: #008CBA;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  padding: 16px 30px;
+  text-decoration: none;
+  font-size: 20px;
+  margin: 2px;
+  cursor: pointer;
+}
+.button2 {
+  background-color: #008000;
+}
