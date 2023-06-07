@@ -3,8 +3,8 @@
 #include <ESPAsyncWebServer.h>
 #include <AsyncElegantOTA.h>
 
-const char* ssid = "INOVUERJ_LACIPI";
-const char* password =  "feudodoinov";
+const char* ssid = "ssssssssssssssssssssssssssssss";
+const char* password =  "ppppppppppppppppppppppppp";
 //const char* mqtt_server = "192.168.1.65";      // Endereço do Mosquitto - Broker
 const char* mqtt_server = "test.mosquitto.org";      // Endereço do Mosquitto - Broker
 char msg[50];
