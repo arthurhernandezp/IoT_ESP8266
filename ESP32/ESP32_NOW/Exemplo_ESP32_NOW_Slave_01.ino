@@ -1,5 +1,5 @@
 #include <esp_now.h>
-#include <ESP8266WiFi.h>
+#include <WiFi.h>
 
 typedef struct dados_struct {
   float temperatura;
