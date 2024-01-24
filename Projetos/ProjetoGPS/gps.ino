@@ -3,10 +3,16 @@
 #include <SoftwareSerial.h>
 #include <TinyGPS++.h>
 
-const char* ssid = "******************";
-const char* password = "**************";
+/*
+GND ------ G
+VCC ------ 3.3V
+TX -------- D6
+RX -------- D5
+*/
+const char* ssid = "LCC-Laboratorio";
+const char* password = "L@b0r@t0r10";
 
-const unsigned int writeInterval = 60000; // write interval (in ms)
+const unsigned int tempodeEspera = 300000; // (in ms)
 
 static const int RXPin = 12, TXPin = 14;
 static const uint32_t GPSBaud = 9600;
@@ -18,7 +24,11 @@ unsigned int mqtt_port = 1883;
 WiFiClient espClient;
 PubSubClient client(espClient);
 TinyGPSPlus gps; 
-SoftwareSerial ss(RXPin, TXPin); 
+SoftwareSerial gpsSerial(RXPin, TXPin); 
+
+int contaFalhas = 0;
+
+void(* resetFunc) (void) = 0;
 
 void setup() {
   Serial.begin(115200);
@@ -28,13 +38,15 @@ void setup() {
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
     Serial.print(".");
+    contaFalhas++;
+    if (contaFalhas>10) resetFunc();
   }
   Serial.println("->WiFi connected");
   Serial.println("->IP address: ");
   Serial.println(WiFi.localIP());
   client.setServer(mqtt_server, mqtt_port); 
 
-  ss.begin(GPSBaud);
+  gpsSerial.begin(GPSBaud);
 
 }
 void loop() {
@@ -42,8 +54,8 @@ void loop() {
     reconnect();
     client.loop();
 
-    while (ss.available() > 0)
-      if (gps.encode(ss.read())){
+    while (gpsSerial.available() > 0)
+      if (gps.encode(gpsSerial.read())){
         displayInfo();
       }
       if (millis() > 5000 && gps.charsProcessed() < 10){
@@ -59,14 +71,15 @@ void displayInfo() {
     Serial.println("*Publicando no Mosquitto");
     char mqtt_payload[30] = "";
     snprintf (mqtt_payload, 30, "latitude=%lf", latitude);
-    client.publish("Latitude_UERJ_IOT",mqtt_payload);
+    // client.publish(topic,payload,retained);
+    client.publish("Latitude_UERJ_IOT",mqtt_payload,true);
     snprintf (mqtt_payload, 30, "longitude = %lf",longitude);
-    client.publish("Longitude_UERJ_IOT",mqtt_payload);
+    client.publish("Longitude_UERJ_IOT",mqtt_payload,true);
     snprintf (mqtt_payload, 30, "altitude = %lf",altitud);
-    client.publish("Altitude_UERJ_IOT",mqtt_payload);
+    client.publish("Altitude_UERJ_IOT",mqtt_payload,true);
 
     Serial.println("Publicado!");   
-    delay(writeInterval);// delay 
+    delay(tempodeEspera);// delay 
   } 
   else {
      Serial.println("Dados Inválidos!!!");
