@@ -5,8 +5,8 @@ void funcaoSala(uint8_t brightness);
 void funcaoQuartoRaquel(uint8_t brightness);
 void funcaoSuite(uint8_t brightness);
 
-const char* ssid = "INOVUERJ_LACIPI";
-const char* password =  "feudodoinov";
+const char* ssid = "**************";
+const char* password =  "**************";
 
 int ledPin21 = 21;  //GPIO21
 int ledPin19 = 19;  //GPIO21
