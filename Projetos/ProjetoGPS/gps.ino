@@ -9,8 +9,8 @@ VCC ------ 3.3V
 TX -------- D6
 RX -------- D5
 */
-const char* ssid = "LCC-Laboratorio";
-const char* password = "L@b0r@t0r10";
+const char* ssid = "**************";
+const char* password = "*********";
 
 const unsigned int tempodeEspera = 300000; // (in ms)
 
