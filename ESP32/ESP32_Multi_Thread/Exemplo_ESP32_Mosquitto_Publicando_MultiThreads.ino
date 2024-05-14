@@ -2,8 +2,8 @@
 #include <PubSubClient.h>
 
 const char* ssid = "INOVUERJ_LACIPI";
-const char* password =  "feudodoinov";
-const char* mqtt_server = "test.mosquitto.org";      // Endereço do Mosquitto - Broker
+const char* password = "**************";
+const char* mqtt_server = "**************";     // Endereço do Mosquitto - Broker
 char msg[50];
 char topico[50];
 
