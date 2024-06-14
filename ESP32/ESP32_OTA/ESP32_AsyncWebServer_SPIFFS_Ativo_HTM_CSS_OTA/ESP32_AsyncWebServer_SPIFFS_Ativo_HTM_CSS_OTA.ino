@@ -3,8 +3,8 @@
 #include "SPIFFS.h"
 #include <AsyncElegantOTA.h>
 
-const char* ssid = "INOVUERJ_LACIPI";
-const char* password = "feudodoinov";
+const char* ssid = "*************";
+const char* password = "*************";
 
 const int ledPin12 = 13;
 const int ledPin13 = 19;
